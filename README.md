@@ -1,4 +1,4 @@
-# Companion AI
+# Haro
 
 A voice-activated AI companion designed for Raspberry Pi 5 with scalable architecture for future robot integration.
 
