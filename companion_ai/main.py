@@ -28,11 +28,11 @@ except ImportError:
         check_raspberry_pi, PerformanceMonitor
     )
 
-class CompanionAI:
-    """Main Companion AI application class"""
+class HaroAI:
+    """Main Haro AI application class"""
     
     def __init__(self):
-        """Initialize the Companion AI system"""
+        """Initialize the Haro AI system"""
         self.voice_handler: Optional[VoiceHandler] = None
         self.speech_engine: Optional[SpeechEngine] = None
         self.ai_brain: Optional[AIBrain] = None
@@ -53,7 +53,7 @@ class CompanionAI:
         """Initialize all system components"""
         try:
             print_banner()
-            print_status("Initializing Companion AI...", "INFO")
+            print_status("Initializing Haro AI...", "INFO")
             
             # Validate configuration
             if not Config.validate():
@@ -129,7 +129,7 @@ class CompanionAI:
             self.speech_engine.speak(error_msg)
     
     def start(self):
-        """Start the Companion AI system"""
+        """Start the Haro AI system"""
         if not self.initialize():
             return False
         
@@ -137,7 +137,7 @@ class CompanionAI:
             self.is_running = True
             
             # Greet the user
-            greeting = f"Hello! I'm {Config.AI_NAME}, your AI companion. How can I help you today?"
+            greeting = f"Hello! I'm {Config.AI_NAME}, your AI assistant. How can I help you today?"
             print_status(greeting, "SPEAKING")
             self.speech_engine.speak(greeting)
             
@@ -145,14 +145,14 @@ class CompanionAI:
             print_status("Starting voice recognition...", "INFO")
             self.voice_handler.start_listening()
             
-            print_status("Companion AI is now active! Say wake words to interact.", "SUCCESS")
+            print_status("Haro AI is now active! Say wake words to interact.", "SUCCESS")
             print_status(f"Wake words: {', '.join(Config.WAKE_WORDS)}", "INFO")
             
             # Main loop
             self._main_loop()
             
         except Exception as e:
-            logger.error(f"Error starting Companion AI: {e}")
+            logger.error(f"Error starting Haro AI: {e}")
             return False
         
         return True
@@ -173,11 +173,11 @@ class CompanionAI:
             self.shutdown()
     
     def shutdown(self):
-        """Shutdown the Companion AI system"""
+        """Shutdown the Haro AI system"""
         if not self.is_running:
             return
         
-        print_status("Shutting down Companion AI...", "INFO")
+        print_status("Shutting down Haro AI...", "INFO")
         self.is_running = False
         
         try:
@@ -240,7 +240,7 @@ def main():
     """Main entry point"""
     import argparse
     
-    parser = argparse.ArgumentParser(description="Companion AI - Voice-activated AI assistant")
+    parser = argparse.ArgumentParser(description="Haro AI - Voice-activated AI assistant")
     parser.add_argument("--test", action="store_true", help="Run in test mode (text input)")
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
     parser.add_argument("--config", action="store_true", help="Show configuration and exit")
@@ -258,13 +258,13 @@ def main():
         return
     
     # Create and start the Companion AI
-    companion = CompanionAI()
+    haro = HaroAI()
     
     try:
         if args.test:
-            success = companion.test_mode()
+            success = haro.test_mode()
         else:
-            success = companion.start()
+            success = haro.start()
         
         if not success:
             sys.exit(1)

@@ -38,7 +38,7 @@ def print_banner():
     """Print application banner"""
     banner = """
     ╔══════════════════════════════════════╗
-    ║          COMPANION AI v1.0           ║
+    ║             HARO v1.0                ║
     ║      Voice-Activated AI Assistant    ║
     ║        Raspberry Pi Optimized       ║
     ╚══════════════════════════════════════╝

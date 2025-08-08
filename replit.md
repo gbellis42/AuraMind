@@ -1,16 +1,17 @@
 # Overview
 
-This project consists of two distinct applications that share the same codebase: a **Companion AI** voice-activated assistant designed for Raspberry Pi hardware, and a **web application** built with React and Express. The Companion AI is a Python-based voice assistant that uses speech recognition, text-to-speech, and OpenAI's GPT-4o model to provide conversational AI functionality optimized for ARM architecture. The web application is a full-stack TypeScript solution with a React frontend using shadcn/ui components and an Express backend with database capabilities.
+This project consists of two distinct applications that share the same codebase: a **Haro** voice-activated assistant designed for Raspberry Pi hardware, and a **web application** built with React and Express. Haro is a Python-based voice assistant that uses speech recognition, text-to-speech, and OpenAI's GPT-4o model to provide conversational AI functionality optimized for ARM architecture. The web application is a full-stack TypeScript solution with a React frontend using shadcn/ui components and an Express backend with database capabilities.
 
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
+AI Assistant name preference: Haro (not Companion AI)
 
 # System Architecture
 
-## Python Companion AI Architecture
+## Python Haro Architecture
 
-**Modular Component Design**: The AI companion follows a clean separation of concerns with dedicated modules for voice handling (`VoiceHandler`), speech synthesis (`SpeechEngine`), AI processing (`AIBrain`), and system utilities. The main application (`CompanionAI`) orchestrates these components through a centralized controller pattern.
+**Modular Component Design**: Haro follows a clean separation of concerns with dedicated modules for voice handling (`VoiceHandler`), speech synthesis (`SpeechEngine`), AI processing (`AIBrain`), and system utilities. The main application (`HaroAI`) orchestrates these components through a centralized controller pattern.
 
 **Voice Processing Pipeline**: Audio input flows through Google Speech Recognition for speech-to-text conversion, gets processed by the AI brain for response generation, and outputs through pyttsx3 for text-to-speech synthesis. This creates a continuous conversation loop optimized for real-time interaction.
 

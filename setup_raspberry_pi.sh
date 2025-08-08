@@ -1,10 +1,10 @@
 #!/bin/bash
-# Setup script for Companion AI on Raspberry Pi
+# Setup script for Haro on Raspberry Pi
 
 set -e
 
 echo "================================================================"
-echo "           Companion AI - Raspberry Pi Setup Script"
+echo "              Haro - Raspberry Pi Setup Script"
 echo "================================================================"
 
 # Colors for output
@@ -193,9 +193,9 @@ create_service() {
         
         SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
         
-        sudo tee /etc/systemd/system/companion-ai.service > /dev/null << EOF
+        sudo tee /etc/systemd/system/haro-ai.service > /dev/null << EOF
 [Unit]
-Description=Companion AI Voice Assistant
+Description=Haro Voice Assistant
 After=network.target sound.target
 
 [Service]
@@ -212,10 +212,10 @@ WantedBy=multi-user.target
 EOF
         
         sudo systemctl daemon-reload
-        sudo systemctl enable companion-ai.service
+        sudo systemctl enable haro-ai.service
         
         print_success "Systemd service created and enabled"
-        print_status "Use 'sudo systemctl start companion-ai' to start the service"
+        print_status "Use 'sudo systemctl start haro-ai' to start the service"
     fi
 }
 
@@ -243,11 +243,11 @@ create_desktop_shortcut() {
         print_status "Creating desktop shortcut..."
         
         SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-        DESKTOP_FILE="$HOME/Desktop/companion-ai.desktop"
+        DESKTOP_FILE="$HOME/Desktop/haro-ai.desktop"
         
         cat > "$DESKTOP_FILE" << EOF
 [Desktop Entry]
-Name=Companion AI
+Name=Haro
 Comment=Voice-Activated AI Assistant
 Exec=lxterminal -e "$SCRIPT_DIR/companion_env/bin/python -m companion_ai.main"
 Icon=applications-science
@@ -263,7 +263,7 @@ EOF
 
 # Main setup function
 main() {
-    echo "Starting Companion AI setup..."
+    echo "Starting Haro setup..."
     echo
     
     # Parse arguments
@@ -306,7 +306,7 @@ main() {
     fi
     
     echo
-    print_success "Setup complete!"
+    print_success "Haro setup complete!"
     echo
     echo "Next steps:"
     echo "1. Set your OpenAI API key (see above)"

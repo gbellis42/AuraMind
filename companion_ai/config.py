@@ -24,11 +24,11 @@ class Config:
     
     # Conversation Settings
     MAX_CONVERSATION_HISTORY: int = 10  # Number of exchanges to remember
-    WAKE_WORDS: list = ["hey companion", "companion", "ai"]
+    WAKE_WORDS: list = ["hey haro", "haro", "ai"]
     
     # AI Personality Settings
-    AI_NAME: str = "Companion"
-    AI_PERSONALITY: str = """You are a helpful, friendly AI companion. You are:
+    AI_NAME: str = "Haro"
+    AI_PERSONALITY: str = """You are Haro, a helpful and friendly AI assistant. You are:
     - Conversational and engaging
     - Supportive and encouraging
     - Curious about the user's day and interests
@@ -50,7 +50,7 @@ class Config:
     @classmethod
     def print_config(cls) -> None:
         """Print current configuration (excluding sensitive data)"""
-        print("=== Companion AI Configuration ===")
+        print("=== Haro AI Configuration ===")
         print(f"AI Name: {cls.AI_NAME}")
         print(f"OpenAI Model: {cls.OPENAI_MODEL}")
         print(f"TTS Rate: {cls.TTS_RATE} WPM")
