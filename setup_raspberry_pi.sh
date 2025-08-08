@@ -219,21 +219,34 @@ EOF
     fi
 }
 
-# Setup OpenAI API key
-setup_openai() {
-    print_status "Setting up OpenAI API key..."
+# Setup AI mode configuration
+setup_ai_mode() {
+    print_status "Setting up AI mode configuration..."
     
-    if [ -z "$OPENAI_API_KEY" ]; then
-        print_warning "OPENAI_API_KEY environment variable not set"
-        echo
-        echo "Please set your OpenAI API key:"
-        echo "export OPENAI_API_KEY='your-api-key-here'"
-        echo
-        echo "To make it permanent, add it to ~/.bashrc:"
-        echo "echo 'export OPENAI_API_KEY=\"your-api-key-here\"' >> ~/.bashrc"
-        echo
+    echo "Choose your AI mode:"
+    echo "1. Local (FREE) - Works completely offline, no API key needed"
+    echo "2. OpenAI - Requires API key but more advanced conversations"
+    echo
+    
+    # Default to local mode for free operation
+    if [ -z "$AI_MODE" ]; then
+        print_status "Defaulting to LOCAL mode (free operation)"
+        echo 'export AI_MODE="local"' >> ~/.bashrc
+        export AI_MODE="local"
+    fi
+    
+    if [ "$AI_MODE" = "openai" ]; then
+        if [ -z "$OPENAI_API_KEY" ]; then
+            print_warning "OpenAI mode selected but OPENAI_API_KEY not set"
+            echo "Please set your OpenAI API key:"
+            echo "export OPENAI_API_KEY='your-api-key-here'"
+            echo "To make it permanent:"
+            echo "echo 'export OPENAI_API_KEY=\"your-api-key-here\"' >> ~/.bashrc"
+        else
+            print_success "OpenAI API key is set"
+        fi
     else
-        print_success "OpenAI API key is set"
+        print_success "Local mode configured - Haro will work completely FREE!"
     fi
 }
 
@@ -295,7 +308,7 @@ main() {
     create_venv
     install_python_deps
     test_audio
-    setup_openai
+    setup_ai_mode
     
     if [ "$CREATE_SERVICE" = true ]; then
         create_service --service
@@ -309,13 +322,15 @@ main() {
     print_success "Haro setup complete!"
     echo
     echo "Next steps:"
-    echo "1. Set your OpenAI API key (see above)"
+    echo "1. Haro is ready to run in LOCAL mode (FREE!)"
     echo "2. Reboot or logout/login for audio group changes"
     echo "3. Test the installation:"
     echo "   source companion_env/bin/activate"
     echo "   python -m companion_ai.main --test"
     echo "4. Run the full voice assistant:"
     echo "   python -m companion_ai.main"
+    echo "5. Optional: To switch to OpenAI mode later:"
+    echo "   export AI_MODE=\"openai\" && export OPENAI_API_KEY=\"your-key\""
     echo
 }
 

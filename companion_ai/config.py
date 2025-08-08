@@ -7,7 +7,10 @@ from typing import Optional
 class Config:
     """Configuration class for Companion AI settings"""
     
-    # OpenAI Configuration
+    # AI Mode Configuration
+    AI_MODE: str = os.getenv("AI_MODE", "local")  # "local" or "openai"
+    
+    # OpenAI Configuration (only used if AI_MODE is "openai")
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     OPENAI_MODEL: str = "gpt-4o"  # the newest OpenAI model is "gpt-4o" which was released May 13, 2024
     
@@ -42,8 +45,14 @@ class Config:
     @classmethod
     def validate(cls) -> bool:
         """Validate configuration settings"""
-        if not cls.OPENAI_API_KEY:
-            print("Warning: OPENAI_API_KEY not set. Please set environment variable.")
+        if cls.AI_MODE == "openai":
+            if not cls.OPENAI_API_KEY:
+                print("Warning: OPENAI_API_KEY not set but AI_MODE is 'openai'. Either set the API key or use AI_MODE='local' for free operation.")
+                return False
+        elif cls.AI_MODE == "local":
+            print("Info: Using local AI mode - no API key required. Haro will work completely offline!")
+        else:
+            print(f"Error: Invalid AI_MODE '{cls.AI_MODE}'. Use 'local' or 'openai'.")
             return False
         return True
     
@@ -52,7 +61,9 @@ class Config:
         """Print current configuration (excluding sensitive data)"""
         print("=== Haro AI Configuration ===")
         print(f"AI Name: {cls.AI_NAME}")
-        print(f"OpenAI Model: {cls.OPENAI_MODEL}")
+        print(f"AI Mode: {cls.AI_MODE} ({'FREE' if cls.AI_MODE == 'local' else 'API-based'})")
+        if cls.AI_MODE == "openai":
+            print(f"OpenAI Model: {cls.OPENAI_MODEL}")
         print(f"TTS Rate: {cls.TTS_RATE} WPM")
         print(f"Energy Threshold: {cls.ENERGY_THRESHOLD}")
         print(f"Max History: {cls.MAX_CONVERSATION_HISTORY}")

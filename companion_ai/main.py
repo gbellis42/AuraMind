@@ -12,6 +12,7 @@ try:
     from .voice_handler import VoiceHandler
     from .speech_engine import SpeechEngine
     from .ai_brain import AIBrain
+    from .local_ai_brain import LocalAIBrain
     from .utils import (
         logger, print_banner, print_status, 
         validate_audio_setup, get_system_info, 
@@ -22,6 +23,7 @@ except ImportError:
     from voice_handler import VoiceHandler
     from speech_engine import SpeechEngine
     from ai_brain import AIBrain
+    from local_ai_brain import LocalAIBrain
     from utils import (
         logger, print_banner, print_status, 
         validate_audio_setup, get_system_info, 
@@ -69,9 +71,13 @@ class HaroAI:
                 print_status("Audio setup validation failed", "ERROR")
                 return False
             
-            # Initialize components
-            print_status("Initializing AI brain...", "INFO")
-            self.ai_brain = AIBrain()
+            # Initialize components based on AI mode
+            if Config.AI_MODE == "local":
+                print_status("Initializing local AI brain (FREE mode)...", "INFO")
+                self.ai_brain = LocalAIBrain()
+            else:
+                print_status("Initializing OpenAI brain...", "INFO")
+                self.ai_brain = AIBrain()
             
             print_status("Initializing speech engine...", "INFO")
             self.speech_engine = SpeechEngine()
